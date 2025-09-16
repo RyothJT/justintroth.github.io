@@ -22,13 +22,21 @@
       <p>Running</p>
 
       <p>Some of my favorite places!</p>
+
       <div class="page">
+        <div class="fullscreen-overlay"></div>
+
         <div class="slideshow-container">
           <div class="slideshow"></div>
           <button class="prev">&lt;</button>
           <button class="next">&gt;</button>
           <button class="fullscreen">⤢</button>
           <button class="exit-btn">&times;</button>
+
+          <div class="slideshow-caption">
+            <h3 id="captionTitle">Title</h3>
+            <p id="captionDesc">Description goes here.</p>
+          </div>
         </div>
 
         <!-- Gray overlay -->
@@ -60,12 +68,33 @@
       // Preload images
       images.forEach(src => new Image().src = src);
 
+      const captionTitle = document.getElementById("captionTitle");
+      const captionDesc = document.getElementById("captionDesc");
+
+      // Example: store captions for each image
+      const captions = [
+        { title: "City 1", desc: "Description for city 1" },
+        { title: "City 2", desc: "Description for city 2" },
+        { title: "City 3", desc: "Description for city 3" },
+        { title: "City 4", desc: "Description for city 4" },
+        { title: "City 5", desc: "Description for city 5" },
+        { title: "City 6", desc: "Description for city 6" },
+        { title: "City 7", desc: "Description for city 7" },
+        { title: "City 8", desc: "Description for city 8" },
+        { title: "City 9", desc: "Description for city 9" },
+        { title: "City 10", desc: "Description for city 10" },
+      ];
+
       function showSlide(index) {
         slide.style.opacity = 0;
         setTimeout(() => {
           slide.style.backgroundImage = `url(${images[index]})`;
           slide.style.opacity = 1;
           current = index;
+
+          // Update caption
+          captionTitle.textContent = captions[index].title;
+          captionDesc.textContent = captions[index].desc;
         }, 500);
       }
 

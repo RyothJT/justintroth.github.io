@@ -1,6 +1,6 @@
 /* Page reset + nice defaults */
 :root {
-    --max-third-4k: 1280px;
+    --max-third-4k: 1600px;
     /* ~1/3 of 3840px */
     --min-read-width: 40ch;
     /* keeps line-length readable on tiny screens */
@@ -48,12 +48,11 @@ model-viewer {
 /* The reading column */
 .container {
     /* responsive width: scale with viewport, but clamp to a max and a minimum readable width */
-    width: 40vw;
+    width: 50vw;
     /* roughly ~1/3 of viewport width; on 4k this is ~1305px */
-    max-width: var(--max-third-4k);
     min-width: var(--min-read-width);
     /* prefer using characters for ideal line length if you want: */
-    max-width: min(var(--max-third-4k), 80ch);
+    max-width: min(var(--max-third-4k), 100ch);
 
     background: #fff;
     padding: calc(var(--base-gap) * 1.5);
@@ -80,7 +79,7 @@ model-viewer {
 .slideshow-container {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 600px;
     /* adjust as needed */
     margin-bottom: 2rem;
     overflow: hidden;
@@ -157,42 +156,70 @@ model-viewer {
   z-index: 10000;          /* below the slideshow container */
 }
 
+/* Expanded slideshow container */
 .slideshow-container.expanded {
   position: fixed;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90vw;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
   z-index: 10001;           /* above overlay */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
+/* Navigation arrows */
 .slideshow-container.expanded .prev,
 .slideshow-container.expanded .next {
-  top: 50%;       /* vertically center */
-  margin-top: 0;  /* remove old negative offset */
+  top: 50%;
   transform: translateY(-50%);
+  margin-top: 0;
 }
 
+/* Fullscreen button hidden in expanded mode */
 .slideshow-container.expanded .fullscreen {
-  display: none;  /* hide fullscreen button when already fullscreen */
+  display: none;
 }
 
+/* Exit button in top-right corner */
 .slideshow-container.expanded .exit-btn {
-  display: block;  /* show exit button */
+  display: block;
   top: 10px;
   right: 15px;
   font-size: 40px;
 }
 
-/* Make the slideshow inside fill the container */
+/* Slideshow image: top 80% */
 .slideshow-container.expanded .slideshow {
-  width: 100%;
-  height: 100%;
-  background-size: contain;      /* or 'cover' if you want it to fill fully and crop slightly */
+  width: 90%;
+  height: 80%;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+  border-radius: 12px; /* optional rounded edges */
 }
+
+/* Caption: bottom 20% */
+.slideshow-container.expanded .slideshow-caption {
+  display: block;
+  position: relative;   /* relative to container */
+  width: 90%;
+  height: 15%;
+  margin-top: 0.5rem;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 12px;  /* optional rounded bottom corners */
+  text-align: center;
+}
+
 
 .exit-btn {
   display: none;            /* hidden by default */
