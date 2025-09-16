@@ -248,19 +248,6 @@ body.no-scroll {
   background: rgba(0,0,0,0.8);
 }
 
-/* Mobile-only overrides */
-@media (max-width: 700px) {
-  .container {
-    max-width: 48rem; /* apply limit only under 700px */
-    padding: 1rem;
-    border-radius: 8px;
-  }
-
-  .page {
-    padding: 1rem;
-  }
-}
-
 @media (max-width: 768px) and (orientation: portrait) {
   .container {
     width: 90vw;    /* fill 90% of screen */
