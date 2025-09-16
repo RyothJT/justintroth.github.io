@@ -79,7 +79,7 @@ model-viewer {
 .swiper-container {
   position: relative;
   width: 100%;
-  height: 600px; /* normal slideshow height */
+  height: 384px; /* normal slideshow height, 768/2 */
   border-radius: 12px;
   overflow: hidden;
 }
@@ -261,6 +261,13 @@ body.no-scroll {
   }
 }
 
+@media (max-width: 768px) and (orientation: portrait) {
+  .container {
+    width: 90vw;    /* fill 90% of screen */
+    min-width: unset; /* allow it to shrink */
+    max-width: unset; /* don’t constrain too much */
+  }
+}
 
 h1 {
     margin-top: 0;
