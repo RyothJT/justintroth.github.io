@@ -5,6 +5,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
   <title>Justin's Stuff</title>
 
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
@@ -24,23 +28,22 @@
       <p>Some of my favorite places!</p>
 
       <div class="page">
-        <div class="fullscreen-overlay"></div>
-
-        <div class="slideshow-container">
-          <div class="slideshow"></div>
-          <button class="prev">&lt;</button>
-          <button class="next">&gt;</button>
-          <button class="fullscreen">⤢</button>
-          <button class="exit-btn">&times;</button>
-
-          <div class="slideshow-caption">
-            <h3 id="captionTitle">Title</h3>
-            <p id="captionDesc">Description goes here.</p>
+        <div class="swiper-container mySwiper">
+          <div class="swiper-wrapper">
+            <!-- Slides will be injected by JS -->
           </div>
-        </div>
 
-        <!-- Gray overlay -->
-        <div class="fullscreen-overlay"></div>
+          <!-- Navigation arrows -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+          <!-- Pagination -->
+          <div class="swiper-pagination"></div>
+
+
+          <!-- Optional fullscreen toggle -->
+          <button id="fullscreenBtn">⤢</button>
+        </div>
       </div>
 
       <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" alt="PCB 3D" auto-rotate camera-controls ar>
@@ -50,123 +53,57 @@
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const images = [];
+      const smallImages = [];
+      const fullImages = [];
       for (let i = 1; i <= 10; i++) {
-        images.push(`Cities_Photos/photo${i}.JPEG`);
+        smallImages.push(`Cities_Photos/photo${i}-Small.JPEG`);
+        fullImages.push(`Cities_Photos/photo${i}.JPEG`);
       }
 
-      const slide = document.querySelector('.slideshow');
-      const prevBtn = document.querySelector('.prev');
-      const nextBtn = document.querySelector('.next');
-      const fullscreenBtn = document.querySelector(".fullscreen");
-      const slideshow = document.querySelector(".slideshow-container");
-      const exitBtn = slideshow.querySelector(".exit-btn");
-      
-      let paused = false;
-      let current = 0;
-      let interval;
+      const swiperWrapper = document.querySelector('.swiper-wrapper');
 
-      // Preload images
-      images.forEach(src => new Image().src = src);
+      // Populate slides with small images initially
+      smallImages.forEach((src, i) => {
+        const slide = document.createElement('div');
+        slide.classList.add('swiper-slide');
 
-      const captionTitle = document.getElementById("captionTitle");
-      const captionDesc = document.getElementById("captionDesc");
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Slide ${i + 1}`;
+        slide.appendChild(img);
 
-      // Example: store captions for each image
-      const captions = [
-        { title: "City 1", desc: "Description for city 1" },
-        { title: "City 2", desc: "Description for city 2" },
-        { title: "City 3", desc: "Description for city 3" },
-        { title: "City 4", desc: "Description for city 4" },
-        { title: "City 5", desc: "Description for city 5" },
-        { title: "City 6", desc: "Description for city 6" },
-        { title: "City 7", desc: "Description for city 7" },
-        { title: "City 8", desc: "Description for city 8" },
-        { title: "City 9", desc: "Description for city 9" },
-        { title: "City 10", desc: "Description for city 10" },
-      ];
+        swiperWrapper.appendChild(slide);
+      });
 
-      function showSlide(index) {
-        slide.style.opacity = 0;
-        setTimeout(() => {
-          slide.style.backgroundImage = `url(${images[index]})`;
-          slide.style.opacity = 1;
-          current = index;
+      // Initialize Swiper
+      let swiper = new Swiper(".mySwiper", {
+        loop: true,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        lazy: true,
+      });
 
-          // Update caption
-          captionTitle.textContent = captions[index].title;
-          captionDesc.textContent = captions[index].desc;
-        }, 500);
-      }
+      // Fullscreen toggle
+      const fullscreenBtn = document.getElementById('fullscreenBtn');
+      let isFullscreen = false;
 
-      function nextSlide() {
-        showSlide((current + 1) % images.length);
-      }
+      fullscreenBtn.addEventListener('click', () => {
+        const container = document.querySelector('.swiper-container');
+        container.classList.toggle('fullscreen');
+        isFullscreen = !isFullscreen;
 
-      function prevSlide() {
-        showSlide((current - 1 + images.length) % images.length);
-      }
+        // Swap to high-res images in fullscreen
+        container.querySelectorAll('img').forEach((img, i) => {
+          img.src = isFullscreen ? fullImages[i] : smallImages[i];
+        });
 
-      function startInterval() {
-        interval = setInterval(nextSlide, 20000);
-      }
-
-      function resetInterval() {
-        if (!paused)  {
-          clearInterval(interval);
-          startInterval();
-        }
-      }
-
-      function pauseSlideshow() {
-        clearInterval(interval);
-        paused = true;
-      }
-
-      function resumeSlideshow() {
-        startInterval();
-        paused = false;
-      }
-
-      function expandSlideshow() {
-        slideshow.classList.add("expanded");
-        pauseSlideshow();
-      }
-
-      function closeSlideshow() {
-        slideshow.classList.remove("expanded");
-        resumeSlideshow();
-      }
-
-      // Initial display
-      showSlide(current);
-      startInterval();
-
-      // Button events
-      nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
-      prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
-      fullscreenBtn.addEventListener("click", () => expandSlideshow());
-      exitBtn.addEventListener("click", closeSlideshow);
-
-      const overlay = document.querySelector(".fullscreen-overlay");
-
-      function expandSlideshow() {
-        slideshow.classList.add("expanded");
-        overlay.style.display = "block";
-        pauseSlideshow();
-      }
-
-      function closeSlideshow() {
-        slideshow.classList.remove("expanded");
-        overlay.style.display = "none";
-        resumeSlideshow();
-      }
-
-      // ESC key
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && slideshow.classList.contains("expanded")) {
-          closeSlideshow();
-        }
+        swiper.update(); // refresh Swiper layout
       });
     });
 

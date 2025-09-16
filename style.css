@@ -76,168 +76,176 @@ model-viewer {
     transition: opacity 0.2s ease-out;
 }
 
-.slideshow-container {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    /* adjust as needed */
-    margin-bottom: 2rem;
-    overflow: hidden;
-    border-radius: 12px;
+.swiper-container {
+  position: relative;
+  width: 100%;
+  height: 600px; /* normal slideshow height */
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.slideshow {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: opacity 0.2s ease-in-out;
-    background-repeat: no-repeat;  /* prevent repeating */
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* or contain if you want */
+  border-radius: 12px;
 }
 
-.slideshow-container button {
-    cursor: pointer;
-    position: absolute;
-
-    transform: translateY(-50%);      /* shift up by half its height */
-
-    width: auto;
-    padding: 20px;
-
-    color: white;           /* arrow color */
-    opacity: 0.8;
-    font-weight: bold;
-    font-size: 38px;
-
-    background-color: transparent;
-    border: none;
-
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-}
-
-.prev {
-    left: 10px;
-    top: 50%;
-}
-
-.next {
-    right: 10px;
-    top: 50%;
-}
-
-.slideshow-container .prev:hover,
-.next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-/* Fullscreen button in top-right corner */
-.fullscreen {
-    top: 40px;
-    /* distance from top */
-    right: 10px;
-    /* distance from right edge of container */
-    font-size: 50px;
-    margin-top: 0;
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 5px 10px;
-    position: absolute;
-    z-index: 2;
-    /* make sure it’s above slideshow */
-}
-
-.fullscreen-overlay {
-  display: none;           /* hidden by default */
+.swiper-container.fullscreen {
   position: fixed;
-  inset: 0;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 80vh;
+  z-index: 10001;
   background: rgba(0,0,0,0.7);
-  z-index: 10000;          /* below the slideshow container */
 }
 
-/* Expanded slideshow container */
-.slideshow-container.expanded {
+/* Swiper navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 6px;
+  width: 45px;
+  height: 45px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background 0.3s;
+  z-index: 2;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* Pagination bullets */
+.swiper-pagination {
+  bottom: 10px !important;
+}
+
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.7);
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: white;
+}
+
+/* Fullscreen button */
+#fullscreenBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  font-size: 32px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#fullscreenBtn:hover {
+  background: rgba(0,0,0,0.8);
+}
+
+/* Full-page gray overlay */
+.overlay {
+  display: none;               /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  z-index: 10000;              /* behind Swiper but above page content */
+}
+
+/* When active, gray page and block scrolling */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* Optional: make Swiper appear above overlay in fullscreen */
+.swiper-container.fullscreen {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 100vh;
-  z-index: 10001;           /* above overlay */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  width: 95vw;
+  height: 95vh;
+  z-index: 10001;
 }
 
-/* Navigation arrows */
-.slideshow-container.expanded .prev,
-.slideshow-container.expanded .next {
-  top: 50%;
-  transform: translateY(-50%);
-  margin-top: 0;
-}
-
-/* Fullscreen button hidden in expanded mode */
-.slideshow-container.expanded .fullscreen {
-  display: none;
-}
-
-/* Exit button in top-right corner */
-.slideshow-container.expanded .exit-btn {
-  display: block;
-  top: 10px;
-  right: 15px;
-  font-size: 40px;
-}
-
-/* Slideshow image: top 80% */
-.slideshow-container.expanded .slideshow {
-  width: 90%;
-  height: 80%;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: all 0.3s ease;
-  margin-top: 12px;
-  border-radius: 12px; /* optional rounded edges */
-}
-
-/* Caption: bottom 20% */
-.slideshow-container.expanded .slideshow-caption {
-  display: block;
-  position: relative;   /* relative to container */
-  width: 90%;
-  height: 15%;
-  margin-top: 0.5rem;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow-y: auto;
-  border-radius: 12px;  /* optional rounded bottom corners */
-  text-align: center;
-}
-
-
-.exit-btn {
-  display: none;            /* hidden by default */
+/* Exit button (optional, only in fullscreen mode) */
+#exitBtn {
   position: absolute;
-  top: 10px;                /* top-right corner */
-  right: 10px;
+  top: 10px;
+  right: 60px; /* leave space from fullscreen button */
+  z-index: 2;
   font-size: 32px;
   background: rgba(0,0,0,0.5);
   color: white;
+  padding: 8px 12px;
   border: none;
   border-radius: 6px;
-  padding: 5px 10px;
   cursor: pointer;
-  z-index: 2;
+  display: none; /* show only in fullscreen mode */
 }
 
-.slideshow-container.expanded .exit-btn {
-  display: block;           /* only visible in fullscreen */
+.swiper-container.fullscreen #exitBtn {
+  display: block;
+}
+
+/* Full-page gray overlay */
+#pageOverlay {
+  display: none;           /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);  /* semi-transparent gray */
+  z-index: 9999;          /* above the page but below slideshow if needed */
+}
+
+/* Optional: fullscreen Swiper styling */
+.swiper-container.fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95vw;
+  height: 95vh;
+  z-index: 10000;         /* above overlay */
+}
+
+/* Disable scrolling on body */
+body.no-scroll {
+  overflow: hidden;
+}
+
+
+/* Optional: make Swiper appear above overlay in fullscreen */
+.swiper-container.fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95vw;
+  height: 95vh;
+  z-index: 10001;
+}
+
+#exitBtn:hover {
+  background: rgba(0,0,0,0.8);
 }
 
 /* Mobile-only overrides */
