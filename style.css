@@ -1,5 +1,99 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f9f9f9;
-  color: #333;
+
+/* Page reset + nice defaults */
+:root{
+--max-third-4k: 1280px;        /* ~1/3 of 3840px */
+--min-read-width: 40ch;       /* keeps line-length readable on tiny screens */
+--base-gap: 1.25rem;
 }
+
+html,body{
+height: 100%;
+margin: 0;
+font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+background: #f7f7f7;
+color: #111;
+-webkit-font-smoothing:antialiased;
+-moz-osx-font-smoothing:grayscale;
+}
+
+model-viewer {
+display: block;        /* make it behave like a block */
+width: 100%;           /* fill the .container horizontally */
+height: 60vh;          /* or whatever height you want */
+max-width: 100%;       /* prevent it from exceeding container */
+border-radius: 8px;    /* optional, to match your container style */
+}
+
+/* Centering wrapper (horizontal by default; change align-items to center to vertically center too) */
+.page {
+min-height: 100%;
+display: flex;
+flex-direction: column;   /* stack vertically */
+justify-content: center;      /* horizontal centering */
+align-items: center;      /* change to 'center' to vertically center the column */
+padding: calc(var(--base-gap) * 2);
+box-sizing: border-box;
+}
+
+/* The reading column */
+.container {
+/* responsive width: scale with viewport, but clamp to a max and a minimum readable width */
+width: 34vw; /* roughly ~1/3 of viewport width; on 4k this is ~1305px */
+max-width: var(--max-third-4k);
+min-width: var(--min-read-width);
+/* prefer using characters for ideal line length if you want: */
+max-width: min(var(--max-third-4k), 66ch);
+
+background: #fff;
+padding: calc(var(--base-gap) * 1.5);
+border-radius: 12px;
+box-shadow: 0 6px 20px rgba(10,10,15,0.06);
+line-height: 1.6;
+box-sizing: border-box;
+}
+
+.hero-title {
+font-size: clamp(2.5rem, 8vw, 6rem); /* scales with screen */
+font-weight: 900;
+text-align: center;
+margin: 0 0 2rem 0;
+line-height: 1.1;
+background: linear-gradient(90deg, #0077ff, #00cc88, #ff3366);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+opacity: 1;
+transition: opacity 0.2s ease-out;
+}
+
+.slideshow {
+  width: 100%;
+  height: 400px; /* adjust as needed */
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1s ease-in-out;
+  margin-bottom: 2rem;
+  border-radius: 12px; /* optional */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Improve typography sizing on small screens */
+@media (max-width: 700px){
+.container{
+    width: 100%;
+    max-width: 48rem;
+    padding: 1rem;
+    border-radius: 8px;
+}
+.page { padding: 1rem; }
+}
+
+/* optional narrow rule for very large displays */
+@media (min-width: 2500px){
+.container {
+    /* keep it from getting too wide even if 34vw grows */
+    max-width: clamp(900px, 34vw, var(--max-third-4k));
+}
+}
+
+h1 { margin-top: 0; }
