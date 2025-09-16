@@ -264,8 +264,8 @@ body.no-scroll {
 @media (max-width: 768px) and (orientation: portrait) {
   .container {
     width: 90vw;    /* fill 90% of screen */
-    min-width: unset; /* allow it to shrink */
-    max-width: unset; /* don’t constrain too much */
+    min-width: 0; /* allow it to shrink */
+    max-width: 90vw; /* don’t constrain too much */
   }
 }
 
