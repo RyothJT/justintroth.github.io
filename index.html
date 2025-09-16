@@ -16,70 +16,126 @@
 
     <article class="container">
       <h2>My Interests!</h2>
-      <p>Cities and transporation</p>
+      <p>Cities and transportation</p>
       <p>Electrical and computer engineering</p>
       <p>Japanese language</p>
       <p>Running</p>
 
-      <!-- Slideshow container -->
-      <div class="slideshow-container">
-        <div class="slideshow"></div>
-        <button class="prev">&lt;</button>
-        <button class="next">&gt;</button>
+      <p>Some of my favorite places!</p>
+      <div class="page">
+        <div class="slideshow-container">
+          <div class="slideshow"></div>
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+          <button class="fullscreen">⤢</button>
+          <button class="exit-btn">&times;</button>
+        </div>
+
+        <!-- Gray overlay -->
+        <div class="fullscreen-overlay"></div>
       </div>
 
-      <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" 
-                    alt="PCB 3D" 
-                    auto-rotate camera-controls ar>
+      <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" alt="PCB 3D" auto-rotate camera-controls ar>
       </model-viewer>
     </article>
   </div>
 
-
   <script>
-    console.log("Script is running!");
-    // ---- HERO TITLE SCROLL FADE ----
-    const hero = document.querySelector('.hero-title');
-    if (!hero) console.warn("Hero title not found!");
-
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const fadePoint = 200;
-      const opacity = Math.max(0, 1 - scrollY / fadePoint);
-      if (hero) hero.style.opacity = opacity;
-
-      // DEBUG
-      console.log("ScrollY:", scrollY, "Hero opacity:", opacity);
-    });
-
-    // ---- BACKGROUND SLIDESHOW ----
     window.addEventListener('DOMContentLoaded', () => {
       const images = [];
       for (let i = 1; i <= 10; i++) {
         images.push(`Cities_Photos/photo${i}.JPEG`);
       }
 
-      let current = 0;
       const slide = document.querySelector('.slideshow');
-      if (!slide) return;
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
+      const fullscreenBtn = document.querySelector(".fullscreen");
+      const slideshow = document.querySelector(".slideshow-container");
+      const exitBtn = slideshow.querySelector(".exit-btn");
+
+      let current = 0;
+      let interval;
 
       // Preload images
       images.forEach(src => new Image().src = src);
 
-      function changeSlide() {
-        slide.style.opacity = 0; // fade out
+      function showSlide(index) {
+        slide.style.opacity = 0;
         setTimeout(() => {
-          slide.style.backgroundImage = `url(${images[current]})`;
-          slide.style.opacity = 1; // fade in
-          current = (current + 1) % images.length;
-        }, 500); // fade duration
+          slide.style.backgroundImage = `url(${images[index]})`;
+          slide.style.opacity = 1;
+          current = index;
+        }, 500);
       }
 
-      // initial image
-      slide.style.backgroundImage = `url(${images[current]})`;
-      current++;
-      setInterval(changeSlide, 5000);
+      function nextSlide() {
+        showSlide((current + 1) % images.length);
+      }
+
+      function prevSlide() {
+        showSlide((current - 1 + images.length) % images.length);
+      }
+
+      function startInterval() {
+        interval = setInterval(nextSlide, 20000);
+      }
+
+      function resetInterval() {
+        clearInterval(interval);
+        startInterval();
+      }
+
+      function pauseSlideshow() {
+        clearInterval(interval);
+      }
+
+      function resumeSlideshow() {
+        startInterval();
+      }
+
+      function expandSlideshow() {
+        slideshow.classList.add("expanded");
+        pauseSlideshow();
+      }
+
+      function closeSlideshow() {
+        slideshow.classList.remove("expanded");
+        resumeSlideshow();
+      }
+
+      // Initial display
+      showSlide(current);
+      startInterval();
+
+      // Button events
+      nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
+      prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
+      fullscreenBtn.addEventListener("click", expandSlideshow);
+      exitBtn.addEventListener("click", closeSlideshow);
+
+      const overlay = document.querySelector(".fullscreen-overlay");
+
+      function expandSlideshow() {
+        slideshow.classList.add("expanded");
+        overlay.style.display = "block";
+        pauseSlideshow();
+      }
+
+      function closeSlideshow() {
+        slideshow.classList.remove("expanded");
+        overlay.style.display = "none";
+        resumeSlideshow();
+      }
+
+      // ESC key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && slideshow.classList.contains("expanded")) {
+          closeSlideshow();
+        }
+      });
     });
+
   </script>
 </body>
 
