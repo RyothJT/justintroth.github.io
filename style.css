@@ -48,7 +48,7 @@ model-viewer {
 /* The reading column */
 .container {
     /* responsive width: scale with viewport, but clamp to a max and a minimum readable width */
-    width: 50vw;
+    width: min(90vw, 100ch); /* fills 90% until text lines get too long */
     /* roughly ~1/3 of viewport width; on 4k this is ~1305px */
     min-width: var(--min-read-width);
     /* prefer using characters for ideal line length if you want: */
@@ -246,14 +246,6 @@ body.no-scroll {
 
 #exitBtn:hover {
   background: rgba(0,0,0,0.8);
-}
-
-@media (max-width: 768px) {
-  .container {
-    width: 90vw;    /* fill 90% of screen */
-    min-width: 0; /* allow it to shrink */
-    max-width: 90vw; /* don’t constrain too much */
-  }
 }
 
 h1 {
