@@ -61,7 +61,8 @@
       const fullscreenBtn = document.querySelector(".fullscreen");
       const slideshow = document.querySelector(".slideshow-container");
       const exitBtn = slideshow.querySelector(".exit-btn");
-
+      
+      let paused = false;
       let current = 0;
       let interval;
 
@@ -111,16 +112,20 @@
       }
 
       function resetInterval() {
-        clearInterval(interval);
-        startInterval();
+        if (!paused)  {
+          clearInterval(interval);
+          startInterval();
+        }
       }
 
       function pauseSlideshow() {
         clearInterval(interval);
+        paused = true;
       }
 
       function resumeSlideshow() {
         startInterval();
+        paused = false;
       }
 
       function expandSlideshow() {
@@ -140,7 +145,7 @@
       // Button events
       nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
       prevBtn.addEventListener('click', () => { prevSlide(); resetInterval(); });
-      fullscreenBtn.addEventListener("click", expandSlideshow);
+      fullscreenBtn.addEventListener("click", () => expandSlideshow());
       exitBtn.addEventListener("click", closeSlideshow);
 
       const overlay = document.querySelector(".fullscreen-overlay");
