@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -12,6 +11,7 @@
   <title>Justin's Stuff</title>
 
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -78,6 +78,9 @@
       // Initialize Swiper
       let swiper = new Swiper(".mySwiper", {
         loop: true,
+        slidesPerView: 1,          // force only 1 slide to fill container
+        spaceBetween: 0,           // remove spacing between slides
+        centeredSlides: false,     // ensure slide starts exactly at left
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -86,7 +89,6 @@
           el: ".swiper-pagination",
           clickable: true,
         },
-        lazy: true,
       });
 
       // Fullscreen toggle

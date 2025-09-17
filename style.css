@@ -76,19 +76,40 @@ model-viewer {
     transition: opacity 0.2s ease-out;
 }
 
+.swiper-wrapper {
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+}
+
 .swiper-container {
   position: relative;
-  width: 100%;
-  height: 384px; /* normal slideshow height, 768/2 */
+  width: 110%;
+  /* maintain 16:9 aspect ratio */
+  aspect-ratio: 4 / 3; 
   border-radius: 12px;
   overflow: hidden;
+  background: transparent;
+}
+
+.swiper-slide {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: lightgray;    /* make sure slides don’t add color */
 }
 
 .swiper-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* or contain if you want */
-  border-radius: 12px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;        /* keep aspect ratio */
+  object-position: center;    /* center image */
+  display: block; /* removes inline spacing issues */
+  user-select: none;       /* prevents text/image selection */
+  -webkit-user-drag: none; /* prevents drag highlight on Chrome/Safari */
+  outline: none;           /* remove focus outline */
 }
 
 .swiper-container.fullscreen {
