@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
   <title>Justin's Stuff</title>
@@ -20,10 +21,52 @@
 
     <article class="container">
       <h2>My Interests!</h2>
-      <p>Cities and transportation</p>
-      <p>Electrical and computer engineering, this is a really long line to test wrapping, didn't seem to push last time</p>
-      <p>Japanese language</p>
-      <p>Running</p>
+
+
+      <div class="space-y-4">
+        <!-- Section 1 -->
+        <div class="border rounded p-2">
+          <button class="w-full text-left font-semibold" onclick="toggleContent('section1')">
+            📘 Cities and transportation
+          </button>
+          <p id="section1" class="hidden mt-2">
+            This is the explanation for category 1.
+          </p>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="border rounded p-2">
+          <button class="w-full text-left font-semibold" onclick="toggleContent('section2')">
+            📗 Electrical and Computer Engineering
+          </button>
+          <p id="section2" class="hidden mt-2">
+            This is the explanation for category 2.
+
+            <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" alt="PCB 3D" auto-rotate camera-controls ar>
+            </model-viewer>
+          </p>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="border rounded p-2">
+          <button class="w-full text-left font-semibold" onclick="toggleContent('section2')">
+            📗 Japanese language
+          </button>
+          <p id="section2" class="hidden mt-2">
+            This is the explanation for category 3.
+          </p>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="border rounded p-2">
+          <button class="w-full text-left font-semibold" onclick="toggleContent('section2')">
+            📗 Running
+          </button>
+          <p id="section2" class="hidden mt-2">
+            This is the explanation for category 4.
+          </p>
+        </div>
+      </div>
 
       <p>Some of my favorite places!</p>
 
@@ -45,9 +88,6 @@
           <button id="fullscreenBtn">⤢</button>
         </div>
       </div>
-
-      <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" alt="PCB 3D" auto-rotate camera-controls ar>
-      </model-viewer>
     </article>
   </div>
 
@@ -77,10 +117,10 @@
 
       // Initialize Swiper
       let swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
         loop: true,
-        slidesPerView: 1,          // force only 1 slide to fill container
-        spaceBetween: 0,           // remove spacing between slides
-        centeredSlides: false,     // ensure slide starts exactly at left
+        spaceBetween: 0,
+        roundLengths: true,   // fixes tiny left/right offset
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
@@ -109,6 +149,10 @@
       });
     });
 
+    function toggleContent(id) {
+      const content = document.getElementById(id);
+      content.classList.toggle("hidden");
+    }
   </script>
 </body>
 

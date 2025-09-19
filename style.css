@@ -48,7 +48,7 @@ model-viewer {
 /* The reading column */
 .container {
     /* responsive width: scale with viewport, but clamp to a max and a minimum readable width */
-    width: min(90vw, 100ch); /* fills 90% until text lines get too long */
+    width: min(90vw, 100ch) !important;  /* fills 90% until text lines get too long */
     /* roughly ~1/3 of viewport width; on 4k this is ~1305px */
     min-width: var(--min-read-width);
     /* prefer using characters for ideal line length if you want: */
@@ -95,6 +95,9 @@ model-viewer {
 .swiper-slide {
   width: 100% !important;
   height: 100% !important;
+  margin: 0;     /* remove any margin */
+  padding: 0;    /* remove padding */
+  width: 100%;   /* fill container exactly */
   display: flex;
   align-items: center;
   justify-content: center;
