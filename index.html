@@ -26,45 +26,42 @@
       <div class="space-y-4">
         <!-- Section 1 -->
         <div class="border rounded p-2">
-          <button class="w-full text-left font-semibold" onclick="toggleContent('section1')">
-            📘 Cities and transportation
-          </button>
-          <p id="section1" class="hidden mt-2">
-            This is the explanation for category 1.
-          </p>
+          <details>
+            <summary>📗 Electrical and Computer Engineering</summary>
+          Chips are magical objects. I wanted to know how the magic worked, so I chose Computer Engineering as my major. I was quite invested in the PC building space, and did a lot of overclocking as well. 
+          
+          My favorite place to learn about the hardware industry is Asionometry, on youtube.
+
+          As of Fall 2025, I'm taking VLSI Design 1, Robot Vision and Digital Design.
+
+          I aspire to one day be a verification or validation engineer. 
+          <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" alt="PCB 3D" auto-rotate camera-controls ar>
+          </model-viewer>
+          </details>
         </div>
 
         <!-- Section 2 -->
         <div class="border rounded p-2">
-          <button class="w-full text-left font-semibold" onclick="toggleContent('section2')">
-            📗 Electrical and Computer Engineering
-          </button>
-          <p id="section2" class="hidden mt-2">
-            This is the explanation for category 2.
-
-            <model-viewer src="Business_Card_Project/JT_Business_Card_v3.2.glb" alt="PCB 3D" auto-rotate camera-controls ar>
-            </model-viewer>
-          </p>
+          <details>
+            <summary>📘 Cities and transportation</summary>
+          I love cities and trains and bikes and busses. As an American, I'm happy to be living in Minneapolis, one of the best cities in the US for getting around by bike. 
+          </details>
         </div>
 
         <!-- Section 3 -->
         <div class="border rounded p-2">
-          <button class="w-full text-left font-semibold" onclick="toggleContent('section2')">
-            📗 Japanese language
-          </button>
-          <p id="section2" class="hidden mt-2">
-            This is the explanation for category 3.
-          </p>
+          <details>
+            <summary>📗 Japanese language</summary>
+          I've been studying Japanese since I was 15 years old. I started off with Anki as a way to keep myself accountable to actually learning every day.
+          </details>
         </div>
 
         <!-- Section 4 -->
         <div class="border rounded p-2">
-          <button class="w-full text-left font-semibold" onclick="toggleContent('section2')">
-            📗 Running
-          </button>
-          <p id="section2" class="hidden mt-2">
-            This is the explanation for category 4.
-          </p>
+          <details>
+            <summary>📘 Running</summary>
+          Under construction.
+          </details>
         </div>
       </div>
 
@@ -148,11 +145,6 @@
         swiper.update(); // refresh Swiper layout
       });
     });
-
-    function toggleContent(id) {
-      const content = document.getElementById(id);
-      content.classList.toggle("hidden");
-    }
   </script>
 </body>
 
