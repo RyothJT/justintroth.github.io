@@ -123,6 +123,8 @@ model-viewer {
   width: 110%;
   aspect-ratio: 4 / 3;
   border-radius: 12px;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   background: transparent;
 }
@@ -176,14 +178,18 @@ model-viewer {
 .swiper-button-prev {
   color: white;
   background: rgba(0, 0, 0, 0.5);
-  padding: 30px;
+  padding: 8pt;
   border-radius: 6px;
-  width: 45px;
-  height: 45px;
-  top: 50%;
+  width: 3%;
+  height: 4%;
   transform: translateY(-50%);
   transition: background 0.3s;
   z-index: 2;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16pt; /* Increase or decrease as needed */
 }
 
 .swiper-button-next:hover,
