@@ -104,7 +104,7 @@ model-viewer {
   font-weight: 900;
   text-align: center;
   margin: 0 0 2rem 0;
-  line-height: 1.1;
+  line-height: 1.2;
   background: linear-gradient(90deg, #0077ff, #00cc88, #ff3366);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
